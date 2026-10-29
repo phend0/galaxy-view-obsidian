@@ -12,7 +12,7 @@ export default class GalaxyViewPlugin extends Plugin {
 
 	async onload(): Promise<void> {
 		this.settings = mergeSettings(await this.loadData());
-		setLang(resolveLang(this.settings.language)); // 命令名/ribbon 需要在注册前定语言
+		setLang(resolveLang(this.settings.language)); // Command names/ribbon need the language resolved before registration
 		this.registerView(VIEW_TYPE_GALAXY, (leaf) => new GalaxyView(leaf, this));
 		this.addSettingTab(new GalaxySettingTab(this.app, this));
 
@@ -42,17 +42,17 @@ export default class GalaxyViewPlugin extends Plugin {
 			},
 		});
 
-		if (!__GALAXY_DEV__) return; // 以下为开发期基准命令，商店构建剔除
+		if (!__GALAXY_DEV__) return; // Dev-only benchmark commands below; stripped from store builds
 
 		this.addCommand({
 			id: 'bench-suite',
-			name: '基准：环绕、冷布局、含未解析',
+			name: 'Benchmark: orbit, cold layout, with unresolved',
 			callback: () => void this.runBenchSuite(),
 		});
 
 		this.addCommand({
 			id: 'bench-leak',
-			name: '基准：泄漏检测（反复开关视图）',
+			name: 'Benchmark: leak detection (repeatedly open/close view)',
 			callback: () => void this.runLeakCanary(),
 		});
 	}
@@ -89,7 +89,7 @@ export default class GalaxyViewPlugin extends Plugin {
 		await c.runScenario('S1');
 		await c.runScenario('S2');
 		await c.runScenario('S3');
-		new Notice('基准完成，结果在 _galaxy_bench/ 目录');
+		new Notice('Benchmark complete, results in the _galaxy_bench/ folder');
 	}
 
 	/** S4：开关视图×10，看堆增量与 WebGL 上下文告警（后者看控制台） */
@@ -109,7 +109,7 @@ export default class GalaxyViewPlugin extends Plugin {
 		}
 		// 布局 tick 产生大量短命垃圾（d3 每 tick 重建八叉树），忙循环期间整堆回收
 		// 不一定跑——等空闲回收收尾后再读数，否则把回收滞后误判成泄漏（2026-06-12 实测）
-		new Notice('基准：等待内存回收…');
+		new Notice('Benchmark: waiting for garbage collection…');
 		await sleep(20_000);
 		const after = heapUsed();
 		const result = {
@@ -123,9 +123,9 @@ export default class GalaxyViewPlugin extends Plugin {
 			heapBeforeMB: before / 1048576,
 			heapAfterMB: after / 1048576,
 			heapDeltaMB: (after - before) / 1048576,
-			note: 'WebGL context 告警需看开发者控制台；真泄漏判据=连续两轮 before 持续抬升',
+			note: 'Check the developer console for WebGL context warnings; a real leak = "before" keeps rising over two consecutive rounds',
 		};
 		await writeBenchResult(this.app, result);
-		new Notice(`S4 完成：堆增量 ${result.heapDeltaMB.toFixed(1)} MB（通过线 <20MB）`);
+		new Notice(`S4 complete: heap delta ${result.heapDeltaMB.toFixed(1)} MB (pass threshold <20MB)`);
 	}
 }
