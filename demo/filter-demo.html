@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Galaxy View · 过滤（#11）· 最终形态预览</title>
+<title>Galaxy View · Filter (#11) · Final design preview</title>
 <style>
   :root {
     --bg: #05060c; --panel-bg: rgba(15,18,29,0.86); --panel-border: rgba(140,160,210,0.16);
@@ -43,7 +43,7 @@
   .sec-h .act { font-size: 10px; color: var(--accent); cursor: pointer; opacity: 0; transition: opacity .12s; }
   .sec:hover .sec-h .act { opacity: 1; }
 
-  /* 文件夹图例 chips */
+  /* Folder legend chips */
   .chips { margin-top: 8px; }
   .chip { display: flex; align-items: center; gap: 7px; padding: 3px 6px; border-radius: 6px; cursor: pointer;
     font-size: 11.5px; color: var(--ink); user-select: none; }
@@ -81,71 +81,71 @@
 </head>
 <body>
 <div class="page">
-  <h1>过滤（#11）· 最终形态预览 —— 用 Rick 真实库的文件夹 / 笔记数 / 修复后的真实颜色</h1>
+  <h1>Filter (#11) · Final design preview — using the folders / note counts / fixed real colors from Rick's actual vault</h1>
   <p class="lede">
-    <b>不需要背语法</b>：点 chip＝显示/隐藏，hover 出「只看」，画布里的点实时跟着变。文本框降级成<b>兜底逃生口</b>（默认折叠），
-    只留给图例表达不了的横切场景——比如散落在所有文件夹里的 <code>Index</code>，正是 #11 提出者的原始诉求。
-    <br>这是 HTML 镜像，用于预览形态；<b>插件里的真面板需要你在 dev vault 亲自看</b>（我没有 Obsidian 授权）。
+    <b>No syntax to memorize</b>: click a chip = show/hide, hover reveals "Solo", and the dots on the canvas update live. The text box is demoted to a <b>fallback escape hatch</b> (collapsed by default),
+    reserved for cross-cutting cases the legend can't express — e.g. <code>Index</code> notes scattered across every folder, which was the original request in #11.
+    <br>This is an HTML mirror for previewing the design; <b>you need to check the real panel in the plugin yourself in a dev vault</b> (I don't have Obsidian access).
   </p>
 
   <div class="cols">
-    <!-- 方向 A -->
+    <!-- Direction A -->
     <div class="col">
-      <div class="col-h">过滤分区</div>
-      <div class="col-sub">图例和过滤器合一：既回答「这个颜色什么意思」（面板从来没有过图例），也回答「只给我看这块」。</div>
+      <div class="col-h">Filter section</div>
+      <div class="col-sub">Legend and filter in one: answers both "what does this color mean" (the panel never had a legend) and "show me only this part".</div>
       <div class="stage">
         <div class="panel">
-          <div class="p-head"><span class="p-title">星系视图</span><span class="spacer"></span><span class="p-stat" id="statA"></span></div>
+          <div class="p-head"><span class="p-title">Galaxy View</span><span class="spacer"></span><span class="p-stat" id="statA"></span></div>
           <div class="sec">
-            <div class="sec-h"><span class="caret">▾</span><span>过滤</span><span class="spacer"></span><span class="act" id="allA">全选</span></div>
+            <div class="sec-h"><span class="caret">▾</span><span>Filter</span><span class="spacer"></span><span class="act" id="allA">Show all</span></div>
             <div class="chips" id="chipsA"></div>
             <div class="esc">
-              <div class="esc-t" id="escTA"><span>＋</span><span>按名字过滤</span></div>
+              <div class="esc-t" id="escTA"><span>＋</span><span>Filter by name</span></div>
               <div class="esc-b" id="escBA"><input id="qA" placeholder="Index  -file:Draft" spellcheck="false" /></div>
             </div>
           </div>
         </div>
         <div class="cv-wrap"><canvas id="cvA" width="172" height="330"></canvas></div>
       </div>
-      <div class="note"><b>好处</b>：零语法、可发现、顺带补上了从来没有过的配色图例。<br><b>代价</b>：14 个文件夹的库里占面板高度；深层文件夹表达不了（只到顶层）。</div>
+      <div class="note"><b>Pros</b>: zero syntax, discoverable, and adds the color legend that never existed.<br><b>Cons</b>: takes panel height in a 14-folder vault; can't express nested folders (top level only).</div>
     </div>
 
   </div>
 
   <div class="find">
-    <b>顺带查出并修掉的真问题</b>：你的库有 <b>14 个顶层文件夹</b>，但你从 2D 图谱导入的配色组只覆盖 9 个。剩下 5 个
-    （99Archive 545 篇、80随记 392、60流浪 93、90故纸堆 86、Readwise 68 —— 合计 <b>1184 篇 ＝ 全库 37%</b>）掉进回退调色板，
-    而它只有 9 个色相、<b>按 hash 取色</b>（与文件夹大小无关且乱序）→ 99Archive / 90故纸堆 / Readwise 撞成同一个蓝。
+    <b>A real bug found and fixed along the way</b>: your vault has <b>14 top-level folders</b>, but the color groups imported from the 2D graph only cover 9. The remaining 5
+    (99Archive 545 notes, 80 Jottings 392, 60 Wandering 93, 90 Old Papers 86, Readwise 68 — <b>1184 notes total = 37% of the vault</b>) fell through to the fallback palette,
+    which has only 9 hues <b>picked by hash</b> (unrelated to folder size, and unordered) → 99Archive / 90 Old Papers / Readwise collided into the same blue.
     <br><br>
-    <b>已修</b>：色相改为①按笔记数排名发、②只发给<b>没被配色组吃掉</b>的文件夹（你的 9 个导入组不占槽位，剩 5 个正好各拿一个独立色相）。
-    上面图例里这 5 个点现在两两不同——那就是修复后的真实色值。这不是本次改动引入的缺陷，是图例把它暴露了出来。
+    <b>Fixed</b>: hues are now ① assigned by note-count rank, and ② given only to folders <b>not already covered by a color group</b> (your 9 imported groups don't take slots, so the remaining 5 each get a distinct hue).
+    The 5 dots in the legend above are now all different — those are the real post-fix colors. This wasn't a defect introduced by this change; the legend just exposed it.
   </div>
 </div>
 
 <script>
-// —— Rick 真实库：文件夹 / 笔记数 / 生效颜色 ——
-// 前 9 个＝他从 2D 图谱导入的 colorGroups（data.json 原值）。
-// 后 5 个无配色组走回退色相，此处为**修复后**的值：按笔记数排名依次拿 hue 0/40/80/120/160，各不相撞。
-// （色值取自 three 的 setHSL(h,0.6,0.6)→getHexString——线性空间算再转 sRGB，不是朴素 HSL→RGB。）
+// —— Rick's real vault: folder / note count / effective color ——
+// First 9 = colorGroups he imported from the 2D graph (raw data.json values).
+// Last 5 have no color group and use fallback hues; these are the **post-fix** values: hue 0/40/80/120/160 by note-count rank, no collisions.
+// (Colors from three's setHSL(h,0.6,0.6)→getHexString — computed in linear space then converted to sRGB, not naive HSL→RGB.)
 const FOLDERS = [
   { name: "04AI",      n: 607, c: "#7fd0a0", src: "imported" },
   { name: "99Archive", n: 545, c: "#eca2a2", src: "hue0" },
   { name: "Cubox",     n: 505, c: "#9a7fe0", src: "imported" },
-  { name: "80随记",     n: 392, c: "#ecd7a2", src: "hue40" },
-  { name: "02工作",     n: 284, c: "#ffc35c", src: "imported" },
-  { name: "01学习",     n: 197, c: "#46d4dc", src: "imported" },
-  { name: "05读书",     n: 133, c: "#e8d9a0", src: "imported" },
-  { name: "30认真活着",  n: 113, c: "#d87fa8", src: "imported" },
-  { name: "60流浪",     n:  93, c: "#d7eca2", src: "hue80" },
-  { name: "06人",       n:  92, c: "#5a9bd8", src: "imported" },
-  { name: "90故纸堆",    n:  86, c: "#a2eca2", src: "hue120" },
+  { name: "80 Jottings",     n: 392, c: "#ecd7a2", src: "hue40" },
+  { name: "02 Work",     n: 284, c: "#ffc35c", src: "imported" },
+  { name: "01 Learning",     n: 197, c: "#46d4dc", src: "imported" },
+  { name: "05 Reading",     n: 133, c: "#e8d9a0", src: "imported" },
+  { name: "30 Living Well",  n: 113, c: "#d87fa8", src: "imported" },
+  { name: "60 Wandering",     n:  93, c: "#d7eca2", src: "hue80" },
+  { name: "06 People",       n:  92, c: "#5a9bd8", src: "imported" },
+  { name: "90 Old Papers",    n:  86, c: "#a2eca2", src: "hue120" },
   { name: "Readwise",  n:  68, c: "#a2ecd7", src: "hue160" },
-  { name: "03产品",     n:  58, c: "#d05a32", src: "imported" },
+  { name: "03 Product",     n:  58, c: "#d05a32", src: "imported" },
   { name: "00Meta",    n:  51, c: "#cfd8e8", src: "imported" },
 ];
 const TOTAL = FOLDERS.reduce((s, f) => s + f.n, 0);
 
-// 合成一个星系：每个文件夹一个团，点数按真实占比
+// Synthesize a galaxy: one cluster per folder, dot count by real proportion
 function mulberry(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 const rnd = mulberry(7);
 const W = 172, H = 330, DOTS = 620;
@@ -176,7 +176,7 @@ function draw(cv, hidden) {
 const shown = (hidden) => FOLDERS.filter(f => !hidden.has(f.name)).reduce((s, f) => s + f.n, 0);
 const fmt = (n) => n.toLocaleString();
 
-// —— 方向 A ——
+// —— Direction A ——
 const hiddenA = new Set();
 const chipsEl = document.getElementById("chipsA");
 function renderA() {
@@ -187,13 +187,13 @@ function renderA() {
     const d = document.createElement("span"); d.className = "dot"; d.style.background = f.c; d.style.color = f.c;
     const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = f.name;
     const ct = document.createElement("span"); ct.className = "ct"; ct.textContent = fmt(f.n);
-    const so = document.createElement("span"); so.className = "solo"; so.textContent = "只看";
+    const so = document.createElement("span"); so.className = "solo"; so.textContent = "Solo";
     so.onclick = (e) => { e.stopPropagation(); hiddenA.clear(); for (const o of FOLDERS) if (o.name !== f.name) hiddenA.add(o.name); renderA(); };
     c.append(d, nm, ct, so);
     c.onclick = () => { off ? hiddenA.delete(f.name) : hiddenA.add(f.name); renderA(); };
     chipsEl.appendChild(c);
   }
-  document.getElementById("statA").textContent = `${fmt(shown(hiddenA))} / ${fmt(TOTAL)} 笔记`;
+  document.getElementById("statA").textContent = `${fmt(shown(hiddenA))} / ${fmt(TOTAL)} notes`;
   draw(document.getElementById("cvA"), hiddenA);
 }
 document.getElementById("allA").onclick = () => { hiddenA.clear(); renderA(); };
